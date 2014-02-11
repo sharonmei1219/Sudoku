@@ -1,0 +1,25 @@
+.tableOftable{
+border:2.5px solid blue;
+border-collapse:collapse;
+}
+
+.tableOftable table,tr,td{
+border:1.5px solid blue;
+border-collapse:collapse;
+}
+
+.tableOfNumber table,tr,td
+{
+border:1px solid blue;
+}
+
+.tableOfNumber td{
+width:35px;
+height:35px;
+text-align:center;
+}
+
+th,td
+{
+padding:0px;
+}
