@@ -24,7 +24,10 @@ th,td
 padding:0px;
 }
 
-input{
+.tableOfNumber input{
 border:none;
 width:35px;
+height:35px;
+text-align:center;
+font-size:25px;
 }

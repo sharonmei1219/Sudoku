@@ -5,7 +5,7 @@
 
 #main-nav {
     position:relative;
-    top:-20px;
+    top:-68px;
     height:50px;
 }
 
@@ -17,6 +17,30 @@
 #main-nav dl{
     padding:0;
 }
+
+#main-nav dt a{
+    display:block;
+    height:0px;
+    padding:44px 0 0 0;
+    overflow:hidden;
+    background-repeat:no-repeat;
+}
+
+#main-nav dt a:hover{
+    background-position:0 -60px;
+}
+
+#main-nav dt#home,
+#main-nav dt#home a{
+    width:100px;
+    background-image:url(../images/home.jpg);
+}
+#main-nav dt#sudoku,
+#main-nav dt#sudoku a{
+    width:100px;
+    background-image:url(../images/sudoku.jpg);
+}
+
 
 #header {
     height: 120px;

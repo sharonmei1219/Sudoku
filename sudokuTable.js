@@ -1,5 +1,5 @@
 function cellInput(inputName){
-    document.write("<td><input type='text' name='"+inputName+"'></td>");
+    document.write("<td><input class='number' type='text' name='"+inputName+"' maxlength='1'></td>");
 }
 
 function aRowInTableOfNumber(rowName){
