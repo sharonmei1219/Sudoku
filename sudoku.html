@@ -31,23 +31,11 @@
 	  <form>
 	    <script>sudokuTable()</script>
 	  </form>
+	  <button id="new" onclick = "loadGame()">New</button>
 	</div>
+
       </div>
-
-      <script>
-	var x=document.getElementsByClassName("number");
-	for(var i=0; i<x.length; i++){
-	x[i].onkeydown = function(e) {
-	var key = e.keyCode ? e.keyCode : e.which;
-	if ( isNaN( String.fromCharCode(key) ) ) return false;
-	else {
-	 this.value=String.fromCharCode(key);
-	}
-	}
-	}
-      </script>
     
-
       <div id="sidebar-left">
 	<dl>
 	  <dt id="easy"><a href="#">Easy</a></dt>
@@ -59,6 +47,7 @@
       <div id="footer">sharonmei1219@gmail.com</div>
 
     </div>
+
 </body>
 
 </html>
