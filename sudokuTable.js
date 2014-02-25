@@ -46,25 +46,25 @@ function loadBlock(blockRow, blockColumn){
 
 	for (var cellRow = 0; cellRow < 3; cellRow++) {
 		for (var cellColumn = 0; cellColumn < 3; cellColumn++) {
-			this.loadCell(blockRow, blockColumn, cellRow, cellColumn);
+			var pos = new Pos(blockRow, blockColumn, cellRow, cellColumn);
+			this.loadCell(pos);
 		}
 	}
 
 };
 
-function loadCell(blockRow, blockColumn, cellRow, cellColumn){
-
-	var cellView = view.getCellView(blockRow, blockColumn, cellRow, cellColumn);
-
-	if (model.isBlankAtPos(blockRow, blockColumn, cellRow, cellColumn)) return;
-	var number = model.getNumberAtPos(blockRow, blockColumn, cellRow, cellColumn);
+function loadCell(pos){
+	
+	var cellView = view.getCellView(pos);
+	if (model.isBlankAtPos(pos)) return;
+	var number = model.getNumberAtPos(pos);
 	cellView.value = number;
 	cellView.disabled = true;
 
 }
 
-function numberAtPosChanged(number, blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex, valid){
-	var cell = view.getCellView(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
+function solutionUpdated(number, pos, valid){
+	var cell = view.getCellView(pos);
 	cell.style.color = "blue";
 	if(!valid) {
 		cell.style.color = "red";
@@ -76,13 +76,14 @@ function numberAtPosChanged(number, blockRowIndex, blockColumnIndex, cellRowInde
 var controller = {load:loadGame,
 		          loadBlock:loadBlock,
 		          loadCell:loadCell,
-		          numberAtPosChanged:numberAtPosChanged};
+		          solutionUpdated:solutionUpdated};
 
 
 
 //--------------------View-------------------
-function getCellView(blockRow, blockColumn, cellRow, cellColumn){
-	return document.getElementById(this.cellID_prefix + blockRow + blockColumn + cellRow + cellColumn);
+function getCellView(pos){
+	var cellID = this.cellID_prefix + pos.blockRowIndex + pos.blockColumnIndex + pos.cellRowIndex + pos.cellColumnIndex;
+	return document.getElementById(cellID);
 }
 
 
@@ -106,29 +107,19 @@ function checkWhetherKeyIsANumberKey(event) {
 		return false;
 };
 
-function rowIndexOfTheBlockWithinWhichCellBelongs(cellInView){
-	return cellInView.id.charAt(this.cellID_prefix.length);
-}
-
-function columnIndexOfTheBlockWithinWhichCellBelongs(cellInView){
-	return cellInView.id.charAt(this.cellID_prefix.length + 1);
-}
-
-function rowIndexOfACell(cellInView){
-	return cellInView.id.charAt(this.cellID_prefix.length + 2);
-}
-
-function columnIndexOfACell(cellInView){
-	return cellInView.id.charAt(this.cellID_prefix.length + 3);
+function getPos(cell){
+	var blockRowIndex = cell.id.charAt(this.cellID_prefix.length);
+	var blockColumnIndex = cell.id.charAt(this.cellID_prefix.length+1);
+	var cellRowIndex = cell.id.charAt(this.cellID_prefix.length+2);
+	var cellColumnIndex = cell.id.charAt(this.cellID_prefix.length+3);
+	
+	return new Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
 }
 
 var view = {getCellView:getCellView,
 		    drawTable:drawTable,
 		    checkWhetherKeyIsANumberKey:checkWhetherKeyIsANumberKey,
-		    rowIndexOfTheBlockWithinWhichCellBelongs:rowIndexOfTheBlockWithinWhichCellBelongs,
-		    columnIndexOfTheBlockWithinWhichCellBelongs:columnIndexOfTheBlockWithinWhichCellBelongs,
-		    rowIndexOfACell:rowIndexOfACell,
-		    columnIndexOfACell:columnIndexOfACell,
+		    getPos:getPos,
 		    cellID_prefix:"CELL"};
 
 
@@ -137,12 +128,9 @@ function keyPressed(e) {
 	var key = event.keyCode ? event.keyCode : event.which;
 	var number = String.fromCharCode(key);
 	
-	var blockRowIndex = view.rowIndexOfTheBlockWithinWhichCellBelongs(this);
-	var blockColumnIndex = view.columnIndexOfTheBlockWithinWhichCellBelongs(this);
-	var cellRowIndex = view.rowIndexOfACell(this);
-	var cellColumnIndex = view.columnIndexOfACell(this);
+	var pos = view.getPos(this);
 	
-	model.putNumberInPos(number, blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
+	model.putNumberInPos(number, pos);
 }
 
 
@@ -192,85 +180,36 @@ var puzzle = [
                ] ] 
 ]
 
-function getNumberAtPos(blockRow, blockColumn, cellRow, cellColumn){
-	return this.puzzle[blockRow][blockColumn][cellRow][cellColumn].number;
+function getNumberAtPos(pos){
+	return this.solution[pos.blockRowIndex][pos.blockColumnIndex][pos.cellRowIndex][pos.cellColumnIndex].number;
 }
 
-function isBlankAtPos(blockRow, blockColumn, cellRow, cellColumn){
-	return (getNumberAtPos(blockRow, blockColumn, cellRow, cellColumn) == 0);
+function isBlankAtPos(pos){
+	return (getNumberAtPos(pos) == 0);
 }
 
-function isInputNumberFitInPos(number, blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex){
-	var valid = true;
-	var neighborInSameBlock_v2 = model.getNeighborInSameBlock_v2(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
-	if(!model.validateInput_v2(neighborInSameBlock_v2, number)){
-		valid = false;
-	}
-	
-	var neighborInSameRow = model.getNeighborInSameRaw_v2(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
-	if(!model.validateInput_v2(neighborInSameRow, number)){
-		valid = false;
-	}
-
-	var neighborInSameColumn_v2 = model.getNeighborInSameColumn_v2(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
-	if(!model.validateInput_v2(neighborInSameColumn_v2, number)){
-		valid = false;
-	}
-	
-	return valid;
+function isNumberFitInPos(number, pos){
+	var neighbors = pos.neighborsInSameBlock().concat(pos.neighborsInSameRow().concat(pos.neighborsInSameColumn()))
+	return this.isNumberUniqueAmongNeighbors(neighbors, number);
 }
 
-function putNumberInPos(number, blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex){
-	var valid = this.isInputNumberFitInPos(number, blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
-	controller.numberAtPosChanged(number, blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex, valid);
+function updateSolution(number, pos){
+	this.solution[pos.blockRowIndex][pos.blockColumnIndex][pos.cellRowIndex][pos.cellColumnIndex].number = number;
 }
 
-function validateInput_v2(neighbors, number){
-	for(var i = 0; i < neighbors.length; i ++){
-		if(neighbors[i] == number) {
-			return false;
-		}
-	}
+function putNumberInPos(number, pos){
+	var valid = this.isNumberFitInPos(number,  pos);
+	this.updateSolution(number, pos);
+	this.listener.solutionUpdated(number, pos, valid);
+}
+
+
+function isNumberUniqueAmongNeighbors(neighbors, number){
+	for(var i = 0; i < neighbors.length; i ++)
+		if(this.getNumberAtPos(neighbors[i]) == number)	return false;
 	return true;
 }
 
-function getNeighborInSameRaw_v2(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex){
-	var result = new Array();
-
-	for(var blockColumn = 0; blockColumn < 3; blockColumn ++){
-		for(var cellColumn = 0; cellColumn < 3; cellColumn ++){
-			if ((blockColumn != blockColumnIndex) || (cellColumn != cellColumnIndex)){
-				result.push(this.solution[blockRowIndex][blockColumn][cellRowIndex][cellColumn].number);
-			}
-		}
-	}
-	return result;
-
-}
-
-function getNeighborInSameColumn_v2(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex){
-	var result = new Array();
-	for(var blockRow = 0; blockRow < 3; blockRow ++){
-		for(var cellRow = 0; cellRow < 3; cellRow ++){
-			if((blockRow != blockRowIndex) || (cellRow != cellRowIndex)){
-				result.push(this.solution[blockRow][blockColumnIndex][cellRow][cellColumnIndex].number);
-			}
-		}
-	}
-	return result;
-}
-
-function getNeighborInSameBlock_v2(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex){
-	var result = new Array();
-	for(var neighborRow = 0; neighborRow < 3; neighborRow ++){
-		for(var neighborColumn = 0; neighborColumn < 3; neighborColumn ++){
-			if((neighborRow != cellRowIndex) || (neighborColumn != cellColumnIndex)){
-				result.push(this.solution[blockRowIndex][blockColumnIndex][neighborRow][neighborColumn].number);
-			}
-		}
-	}
-	return result;
-}
 
 var solution = puzzle.slice();
 
@@ -278,19 +217,63 @@ var model = {puzzle:puzzle,
 		     getNumberAtPos:getNumberAtPos,
 		     isBlankAtPos:isBlankAtPos,
 		     putNumberInPos:putNumberInPos,
-		     getNeighborInSameRaw_v2:getNeighborInSameRaw_v2,
-		     getNeighborInSameColumn_v2:getNeighborInSameColumn_v2,
-		     getNeighborInSameBlock_v2:getNeighborInSameBlock_v2,
-		     validateInput_v2:validateInput_v2,
-		     isInputNumberFitInPos:isInputNumberFitInPos,
+		     isNumberUniqueAmongNeighbors:isNumberUniqueAmongNeighbors,
+		     isNumberFitInPos:isNumberFitInPos,
+		     updateSolution:updateSolution,
 		     solution:solution};
 
+model.listener = controller;
 
 
 //--------------Pos-----------------
-function Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex){
+function Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex) {
 	this.blockRowIndex = blockRowIndex;
 	this.blockColumnIndex = blockColumnIndex;
 	this.cellRowIndex = cellRowIndex;
 	this.cellColumnIndex = cellColumnIndex;
+	
+	this.neighborsInSameRow = function() {
+		var result = new Array();
+		for (var neighborBlockColum = 0; neighborBlockColum < 3; neighborBlockColum++) {
+			for (var neighborCellColumn = 0; neighborCellColumn < 3; neighborCellColumn++) {
+				if((neighborBlockColum != this.blockColumnIndex) || (neighborCellColumn != this.cellColumnIndex)){
+					result.push(new Pos(this.blockRowIndex, neighborBlockColum,	this.cellRowIndex, neighborCellColumn));
+				}
+			}
+		}
+
+		return result;
+	}
+	
+	this.neighborsInSameBlock = function(){
+		var result = new Array();
+		for (var neighborCellRow = 0; neighborCellRow < 3; neighborCellRow++) {
+			for (var neighborCellColumn = 0; neighborCellColumn < 3; neighborCellColumn++) {
+				if((neighborCellRow != this.cellRowIndex) || (neighborCellColumn != this.cellColumnIndex)){
+					result.push(new Pos(this.blockRowIndex, this.blockColumnIndex,	neighborCellRow, neighborCellColumn));
+				}
+			}
+		}
+
+		return result;
+	}
+	
+	this.neighborsInSameColumn = function(){
+		var result = new Array();
+		for (var neighborBlockRow = 0; neighborBlockRow < 3; neighborBlockRow++) {
+			for (var neighborCellRow = 0; neighborCellRow < 3; neighborCellRow++) {
+				if((neighborBlockRow != this.blockRowIndex) || (neighborCellRow != this.cellRowIndex)){
+					result.push(new Pos(neighborBlockRow, this.blockColumnIndex,	neighborCellRow, this.cellColumnIndex));
+				}
+			}
+		}
+
+		return result;
+	}
+	
+	this.toString = function(){
+		return "" + this.blockRowIndex + this.blockColumnIndex + this.cellRowIndex + this.cellColumnIndex;
+	}
 }
+
+
