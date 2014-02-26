@@ -1,0 +1,8 @@
+<project>
+
+  <target name="clean">
+    <delete dir="war\WEB-INFO\classes"/>
+  </target>
+
+  
+</project>
