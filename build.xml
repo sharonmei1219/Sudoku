@@ -4,5 +4,10 @@
     <delete dir="war\WEB-INFO\classes"/>
   </target>
 
+  <target name="build">
+    <mkdir dir="war\WEB-INFO\classes"/>
+    <javac srcdir="src" destdir="war\WEB-INFO\classes"/>
+  </target>
+
   
 </project>

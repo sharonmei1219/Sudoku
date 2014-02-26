@@ -1,0 +1,129 @@
+#page-container{
+    width:760px;
+    margin:auto;
+}
+
+#main-nav {
+    position:relative;
+    top:-68px;
+    height:50px;
+}
+
+#main-nav dt{
+    float:right;
+    width:50px;
+}
+
+#main-nav dl{
+    padding:0;
+}
+
+#main-nav dt a{
+    display:block;
+    height:0px;
+    padding:44px 0 0 0;
+    overflow:hidden;
+    background-repeat:no-repeat;
+}
+
+#main-nav dt a:hover{
+    background-position:0 -60px;
+}
+
+#main-nav dt#home,
+#main-nav dt#home a{
+    width:100px;
+    background-image:url(../images/home.jpg);
+}
+#main-nav dt#sudoku,
+#main-nav dt#sudoku a{
+    width:100px;
+    background-image:url(../images/sudoku.jpg);
+}
+
+
+#header {
+    height: 120px;
+}
+
+#header img{
+    float:left;
+}
+#header h1{
+    float:left;
+    margin-top:70px;
+}
+
+#footer{
+    clear:both;
+    height:66px;
+}
+
+#content{
+    float:right;
+    width:600px;
+    height:460px;
+}
+
+#sidebar-left{
+    margin-right:600px;
+}
+
+#sidebar-left dl{
+    margin-top:15px;
+    margin-left:30px;
+    padding:0;
+}
+
+#sidebar-left dt a{
+    display: block;
+    background:red;
+    height:0px;
+    padding: 44px 0 0 0;
+    overflow:hidden;
+    background-repeat:no-repeat;
+}
+
+#sidebar-left dt a:hover{
+    background-position:0 -44px;
+}
+
+#sidebar-left dt#easy,
+#sidebar-left dt#easy a{
+    width:100px;
+    background-image:url(../images/easy.jpg);
+}
+#sidebar-left dt#medium,
+#sidebar-left dt#medium a{
+    width:100px;
+    background-image:url(../images/medium.jpg);
+}
+#sidebar-left dt#hard,
+#sidebar-left dt#hard a{
+    width:100px;
+    background-image:url(../images/hard.jpg);
+}
+#sidebar-left dt#evil,
+#sidebar-left dt#evil a{
+    width:100px;
+    background-image:url(../images/evil.jpg);
+}
+html, body{
+    margin:0;
+    padding:0;
+}
+
+#sudoku-table{
+    margin:auto;
+    height:80%;
+    margin-top:15px;
+    width:70%;
+}
+
+body{
+
+    font-family: Arial, Helvetica, Verdana, Sans-serif;
+    font-size: 12px;
+    color: #666666;
+    background:#ffffff;
+}
