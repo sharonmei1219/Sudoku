@@ -1,6 +1,6 @@
 <servlet>
 	<servlet-name>sudoku</servlet-name>
-	<servlet-class>com.practice.sudoku</servlet-class>
+	<servlet-class>com.practice.Sudoku</servlet-class>
 </servlet>
 
 <servlet-mapping>
