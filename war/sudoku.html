@@ -2,51 +2,66 @@
 <html>
 
 <head>
-    <title>Sudoku Practice</title>
-    <link rel="stylesheet" type="text/css" href="css/tablestyle.css">
-    <link rel="stylesheet" type="text/css" href="css/layout.css">
-    <script src="sudokuTable.js"></script>    
+<title>Sudoku Practice</title>
+<link rel="stylesheet" type="text/css" href="css/tablestyle.css">
+<link rel="stylesheet" type="text/css" href="css/layout.css">
+<script src="sudokuTable.js"></script>
 </head>
 
 <body>
-    <div id="page-container">
+	<div id="page-container">
 
-      <div id="header">
-	<img src="images/pig.jpg" alt="Sharon's Home" width="150" height="120">
-	<h1>Sharon's Home</h1>
-      </div>
-      
-      <div id="main-nav">
+		<div id="header">
+			<img src="images/pig.jpg" alt="Sharon's Home" width="150"
+				height="120">
+			<h1>Sharon's Home</h1>
+		</div>
 
-	<dl>
-	  <dt id="home"><a href="#">Home</a></dt>
-	  <dt id="sudoku"><a href="#">Sudoku</a></dt>
-	  
-	</dl>
-	<img src="images/headline.jpg" width="760" height="5">
-      </div>
+		<div id="main-nav">
 
-      <div id="content">
-	<div id="sudoku-table">
-	  <form>
-	    <script>view.drawTable()</script>
-	  </form>
-	  <button id="new" onclick = "controller.load()">New</button>
+			<dl>
+				<dt id="home">
+					<a href="#">Home</a>
+				</dt>
+				<dt id="sudoku">
+					<a href="#">Sudoku</a>
+				</dt>
+
+			</dl>
+			<img src="images/headline.jpg" width="760" height="5">
+		</div>
+
+		<div id="content">
+			<div id="sudoku-table">
+				<form>
+					<script>
+						view.drawTable()
+					</script>
+				</form>
+				<button id="new" onclick="controller.load()">New</button>
+			</div>
+
+		</div>
+
+		<div id="sidebar-left">
+			<dl>
+				<dt id="easy">
+					<a href="#">Easy</a>
+				</dt>
+				<dt id="medium">
+					<a href="#">Medium</a>
+				</dt>
+				<dt id="hard">
+					<a href="#">Hard</a>
+				</dt>
+				<dt id="evil">
+					<a href="#">Evil</a>
+				</dt>
+		</div>
+
+		<div id="footer">sharonmei1219@gmail.com</div>
+
 	</div>
-
-      </div>
-    
-      <div id="sidebar-left">
-	<dl>
-	  <dt id="easy"><a href="#">Easy</a></dt>
-	  <dt id="medium"><a href="#">Medium</a></dt>
-	  <dt id="hard"><a href="#">Hard</a></dt>
-	  <dt id="evil"><a href="#">Evil</a></dt>
-      </div>
-
-      <div id="footer">sharonmei1219@gmail.com</div>
-
-    </div>
 
 </body>
 

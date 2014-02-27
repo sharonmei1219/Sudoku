@@ -1,13 +1,16 @@
 <project>
+	
+	<property name="src.dir" value="src"/>
+	<property name="build.dir" value="war\WEB-INFO\classes"/>
 
-  <target name="clean">
-    <delete dir="war\WEB-INFO\classes"/>
-  </target>
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
 
-  <target name="build">
-    <mkdir dir="war\WEB-INFO\classes"/>
-    <javac srcdir="src" destdir="war\WEB-INFO\classes"/>
-  </target>
+	<target name="build">
+		<mkdir dir="${build.dir}"/>
+		<javac srcdir="${src.dir}" destdir="war\WEB-INFO\classes" />
+	</target>
 
-  
+
 </project>
