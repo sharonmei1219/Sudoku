@@ -1,7 +1,11 @@
 <project>
 	
+	<property file="build.properties"/>
+	
 	<property name="src.dir" value="src"/>
+	<property name="web.dir" value="war"/>
 	<property name="build.dir" value="war\WEB-INFO\classes"/>
+	<property name="name" value="sudokuPractice"/>
 
 	<target name="clean">
 		<delete dir="${build.dir}"/>
@@ -10,6 +14,14 @@
 	<target name="build">
 		<mkdir dir="${build.dir}"/>
 		<javac srcdir="${src.dir}" destdir="war\WEB-INFO\classes" />
+	</target>
+	
+	<target name="deploy" depends="build">
+		<copy todir="${deploy.path}/${name}" preservelastmodified="true">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
 	</target>
 
 
