@@ -4,7 +4,7 @@
 	
 	<property name="src.dir" value="src"/>
 	<property name="web.dir" value="war"/>
-	<property name="build.dir" value="war\WEB-INFO\classes"/>
+	<property name="build.dir" value="war\WEB-INF\classes"/>
 	<property name="name" value="sudokuPractice"/>
 
 	<target name="clean">
@@ -13,7 +13,7 @@
 
 	<target name="build">
 		<mkdir dir="${build.dir}"/>
-		<javac srcdir="${src.dir}" destdir="war\WEB-INFO\classes" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" />
 	</target>
 	
 	<target name="deploy" depends="build">

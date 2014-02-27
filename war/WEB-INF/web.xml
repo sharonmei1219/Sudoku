@@ -1,0 +1,9 @@
+<servlet>
+	<servlet-name>sudoku</servlet-name>
+	<servlet-class>com.practice.sudoku</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>sudoku</servlet-name>
+	<url-pattern>/sudoku/*</url-pattern>
+</servlet-mapping>
