@@ -47,3 +47,11 @@ function Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex) {
 		return "" + this.blockRowIndex + this.blockColumnIndex + this.cellRowIndex + this.cellColumnIndex;
 	}
 }
+
+function parseStringToPos(str){
+	var blockRowIndex = str.charAt(0);
+	var blockColumnIndex = str.charAt(1);
+	var cellRowIndex = str.charAt(2);
+	var cellColumnIndex = str.charAt(3);
+	return new Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
+}

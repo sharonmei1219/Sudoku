@@ -86,4 +86,3 @@ var model = {numberAtPos:numberAtPos,
 		     updateSolution:updateSolution,
 		     init:init};
 
-model.listener = controller;

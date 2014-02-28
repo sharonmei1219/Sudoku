@@ -54,13 +54,11 @@ function loadBlock(blockRow, blockColumn){
 };
 
 function loadCell(pos){
-	
 	var cellView = view.getCellView(pos);
 	if (model.isBlankAtPos(pos)) return;
 	var number = model.numberAtPos(pos);
 	cellView.value = number;
 	cellView.disabled = true;
-
 }
 
 function solutionUpdated(number, pos, valid){
@@ -78,11 +76,11 @@ var controller = {load:loadGame,
 		          loadCell:loadCell,
 		          solutionUpdated:solutionUpdated};
 
-
+model.listener = controller;
 
 //--------------------View-------------------
 function getCellView(pos){
-	var cellID = this.cellID_prefix + pos.blockRowIndex + pos.blockColumnIndex + pos.cellRowIndex + pos.cellColumnIndex;
+	var cellID = this.cellID_prefix + pos.toString();
 	return document.getElementById(cellID);
 }
 
@@ -108,12 +106,8 @@ function checkWhetherKeyIsANumberKey(event) {
 };
 
 function getPos(cell){
-	var blockRowIndex = cell.id.charAt(this.cellID_prefix.length);
-	var blockColumnIndex = cell.id.charAt(this.cellID_prefix.length+1);
-	var cellRowIndex = cell.id.charAt(this.cellID_prefix.length+2);
-	var cellColumnIndex = cell.id.charAt(this.cellID_prefix.length+3);
-	
-	return new Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex);
+	var str = cell.id.substr(this.cellID_prefix.length);
+	return parseStringToPos(str);
 }
 
 var view = {getCellView:getCellView,
@@ -122,14 +116,10 @@ var view = {getCellView:getCellView,
 		    getPos:getPos,
 		    cellID_prefix:"CELL"};
 
-
-
 function keyPressed(e) {
 	var key = event.keyCode ? event.keyCode : event.which;
 	var number = String.fromCharCode(key);
-	
 	var pos = view.getPos(this);
-	
 	model.putNumberInPos(number, pos);
 }
 
@@ -137,14 +127,10 @@ function loadPuzzle() {
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function() {
 		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-			var newPuzzle = eval('(' + this.responseText + ')');
-			controller.load(newPuzzle);
-			document.getElementById("AjaxResponse").innerHTML = "AjaxWorksFine";
-		} else {
-			document.getElementById("AjaxResponse").innerHTML = "Problem";
-		}
+			controller.load(eval('(' + this.responseText + ')'));
+		} 
 	}
 	httpRequest.open("GET", "sudoku");
 	httpRequest.send();
-
 }
+
