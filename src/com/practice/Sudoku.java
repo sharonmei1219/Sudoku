@@ -13,7 +13,12 @@ public class Sudoku extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println("<h1> Hello from Server </h1>");
+		out.write(getPuzzle());
 	}
-
+	
+	private String getPuzzle(){
+		StringBuffer puzzle = null;
+		puzzle = new StringBuffer("[{number:3}, {number:5}]");
+		return puzzle.toString();
+	}
 }
