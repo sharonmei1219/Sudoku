@@ -12,7 +12,9 @@ function loadPuzzle(){
 	httpRequest.onreadystatechange = function(){
 		if(httpRequest.readyState == 4 && httpRequest.status == 200){
 			var newPuzzle = eval('('+this.responseText+')');
-			alert(newPuzzle[0].number + " " + newPuzzle[1].number);
+			model.puzzle = newPuzzle;
+			model.solution = newPuzzle.slice();
+			controller.load();
 			document.getElementById("AjaxResponse").innerHTML="AjaxWorksFine";
 		}
 		else{

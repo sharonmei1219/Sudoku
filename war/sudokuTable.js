@@ -185,7 +185,7 @@ function getNumberAtPos(pos){
 }
 
 function isBlankAtPos(pos){
-	return (getNumberAtPos(pos) == 0);
+	return (this.getNumberAtPos(pos) == 0);
 }
 
 function isNumberFitInPos(number, pos){
