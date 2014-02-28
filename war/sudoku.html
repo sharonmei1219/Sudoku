@@ -5,27 +5,9 @@
 <title>Sudoku Practice</title>
 <link rel="stylesheet" type="text/css" href="css/tablestyle.css">
 <link rel="stylesheet" type="text/css" href="css/layout.css">
-<script src="js/sudokuTable.js"></script>
-<script>
-function loadPuzzle(){
-	var httpRequest = new XMLHttpRequest();
-	httpRequest.onreadystatechange = function(){
-		if(httpRequest.readyState == 4 && httpRequest.status == 200){
-			var newPuzzle = eval('('+this.responseText+')');
-			model.puzzle = newPuzzle;
-			model.solution = newPuzzle.slice();
-			controller.load();
-			document.getElementById("AjaxResponse").innerHTML="AjaxWorksFine";
-		}
-		else{
-			document.getElementById("AjaxResponse").innerHTML="Problem";
-		}
-	}
-	httpRequest.open("GET", "sudoku");
-	httpRequest.send();
-
-}
-</script>
+<script src="js/puzzle.js"></script>
+<script src="js/pos.js"></script>
+<script src="js/controller.js"></script>
 </head>
 
 <body>
@@ -58,7 +40,7 @@ function loadPuzzle(){
 						view.drawTable()
 					</script>
 				</form>
-				<button id="new" onclick="controller.load()">New</button>
+				<button id="new" onclick="controller.load(puzzle)">New</button>
 				<button id="loadPuzzle" onclick="loadPuzzle()">LoadPuzzle</button>
 				<p id="AjaxResponse"></p>
 			</div>
