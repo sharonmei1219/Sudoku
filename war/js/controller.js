@@ -47,14 +47,14 @@ function loadBlock(blockRow, blockColumn){
 	for (var cellRow = 0; cellRow < 3; cellRow++) {
 		for (var cellColumn = 0; cellColumn < 3; cellColumn++) {
 			var pos = new Pos(blockRow, blockColumn, cellRow, cellColumn);
-			this.loadCell(pos);
+			this.loadNumberFromModelToCell(pos);
 		}
 	}
 
 };
 
-function loadCell(pos){
-	var cellView = view.getCellView(pos);
+function loadNumberFromModelToCell(pos){
+	var cellView = mapper.mapPosToCell(pos);
 	if (model.isBlankAtPos(pos)) return;
 	var number = model.numberAtPos(pos);
 	cellView.value = number;
@@ -62,7 +62,7 @@ function loadCell(pos){
 }
 
 function solutionUpdated(number, pos, valid){
-	var cell = view.getCellView(pos);
+	var cell = mapper.mapPosToCell(pos);
 	cell.style.color = "blue";
 	if(!valid) {
 		cell.style.color = "red";
@@ -73,18 +73,12 @@ function solutionUpdated(number, pos, valid){
 
 var controller = {load:loadGame,
 		          loadBlock:loadBlock,
-		          loadCell:loadCell,
+		          loadNumberFromModelToCell:loadNumberFromModelToCell,
 		          solutionUpdated:solutionUpdated};
 
 model.listener = controller;
 
 //--------------------View-------------------
-function getCellView(pos){
-	var cellID = this.cellID_prefix + pos.toString();
-	return document.getElementById(cellID);
-}
-
-
 function drawTable() {
 	document.write("<table class='tableOftable'>");
 	for (var row = 0; row < 3; row++) {
@@ -105,21 +99,28 @@ function checkWhetherKeyIsANumberKey(event) {
 		return false;
 };
 
-function getPos(cell){
-	var str = cell.id.substr(this.cellID_prefix.length);
-	return parseStringToPos(str);
-}
+var view = {drawTable:drawTable,
+		    checkWhetherKeyIsANumberKey:checkWhetherKeyIsANumberKey};
 
-var view = {getCellView:getCellView,
-		    drawTable:drawTable,
-		    checkWhetherKeyIsANumberKey:checkWhetherKeyIsANumberKey,
-		    getPos:getPos,
-		    cellID_prefix:"CELL"};
+function Mapper(){
+	this.cellID_prefix = "CELL"
+	this.mapCellToPos = function(cell){
+		var str = cell.id.substr(this.cellID_prefix.length);
+		return parseStringToPos(str);
+	}
+	
+	this.mapPosToCell = function(pos){
+		var cellID = this.cellID_prefix + pos.toString();
+		return document.getElementById(cellID);
+	}
+};
+
+mapper = new Mapper();
 
 function keyPressed(e) {
 	var key = event.keyCode ? event.keyCode : event.which;
 	var number = String.fromCharCode(key);
-	var pos = view.getPos(this);
+	var pos = mapper.mapCellToPos(this);
 	model.putNumberInPos(number, pos);
 }
 

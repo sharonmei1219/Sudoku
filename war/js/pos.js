@@ -13,7 +13,6 @@ function Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex) {
 				}
 			}
 		} 
-
 		return result;
 	}
 	
@@ -26,7 +25,6 @@ function Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex) {
 				}
 			}
 		}
-
 		return result;
 	}
 	
@@ -39,9 +37,8 @@ function Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex) {
 				}
 			}
 		}
-
 		return result;
-	}
+	} 
 	
 	this.toString = function(){
 		return "" + this.blockRowIndex + this.blockColumnIndex + this.cellRowIndex + this.cellColumnIndex;
