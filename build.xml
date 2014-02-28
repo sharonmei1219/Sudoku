@@ -1,29 +1,30 @@
 <project>
 
-	<property file="build.properties" />
+	<property file="build.properties"/>
 
-	<property name="src.dir" value="src" />
-	<property name="web.dir" value="war" />
-	<property name="build.dir" value="war\WEB-INF\classes" />
-	<property name="name" value="sudokuPractice" />
+	<property name="src.dir" value="src"/>
+	<property name="web.dir" value="war"/>
+	<property name="build.dir" value="war\WEB-INF\classes"/>
+	<property name="name" value="sudokuPractice"/>
 
 	<path id="master-classpath">
 		<fileset dir="${appserver.lib}">
-			<include name="servlet*.jar" />
+			<include name="servlet*.jar"/>
 		</fileset>
 	</path>
 
 	<target name="clean">
-		<delete dir="${build.dir}" />
+		<delete dir="${build.dir}"/>
 	</target>
 
 	<target name="build">
-		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir}"/>
 		<javac srcdir="${src.dir}" destdir="${build.dir}">
-			<classpath refid="master-classpath" />
+			<classpath refid="master-classpath"/>
 		</javac>
 	</target>
 
+	
 	<target name="deploy" depends="build">
 		<copy todir="${deploy.path}/${name}" preservelastmodified="true">
 			<fileset dir="${web.dir}">
