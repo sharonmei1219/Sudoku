@@ -12,7 +12,7 @@ function Pos(blockRowIndex, blockColumnIndex, cellRowIndex, cellColumnIndex) {
 					result.push(new Pos(this.blockRowIndex, neighborBlockColum,	this.cellRowIndex, neighborCellColumn));
 				}
 			}
-		}
+		} 
 
 		return result;
 	}

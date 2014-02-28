@@ -61,7 +61,6 @@ function updateSolution(number, pos){
 
 function putNumberInPos(number, pos){
 	this.updateSolution(number, pos);
-	
 	var valid = this.isNumberFitInPos(number,  pos);
 	this.listener.solutionUpdated(number, pos, valid);
 }
