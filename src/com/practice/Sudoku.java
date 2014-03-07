@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 public class Sudoku extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -17,48 +19,10 @@ public class Sudoku extends HttpServlet {
 	}
 	
 	private String getPuzzle(){
-		StringBuffer puzzle = null;
-		puzzle = new StringBuffer("[[[");
-		puzzle.append("[0,0,0],");
-        puzzle.append("[0,0,0],");
-        puzzle.append("[0,0,0]"); 
-        puzzle.append("],[");
-        puzzle.append("[0,0,0],");
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0]"); 
-        puzzle.append("],["); 
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0]"); 
-        puzzle.append("]],");
-//raw 2
-        puzzle.append("[["); 
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0]");
-        puzzle.append("],["); 
-        puzzle.append("[0,0,0],");
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0]"); 
-        puzzle.append("],["); 
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0]"); 
-        puzzle.append("] ],");
-//raw 3
-        puzzle.append("[["); 
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0]"); 
-        puzzle.append("],["); 
-        puzzle.append("[0,0,0],");
-        puzzle.append("[0,0,0],"); 
-        puzzle.append("[0,0,0]");
-        puzzle.append("],["); 
-        puzzle.append("[1,2,3],"); 
-        puzzle.append("[4,5,6],"); 
-        puzzle.append("[7,8,9]"); 
-        puzzle.append("]]]");
-		return puzzle.toString();
+		Gson gson = new Gson();
+		int [][][][] table = {{{{1, 2, 3},{4, 5, 6},{7, 8, 9}},{{0, 0, 0},{0, 0, 0},{0, 0, 0}},{{0, 0, 0},{0, 0, 0},{0, 0, 0}}},
+				             {{{0, 0, 0},{0, 0, 0},{0, 0, 0}},{{0, 0, 0},{0, 0, 0},{0, 0, 0}},{{0, 0, 0},{0, 0, 0},{0, 0, 0}}},
+				             {{{0, 0, 0},{0, 0, 0},{0, 0, 0}},{{0, 0, 0},{0, 0, 0},{0, 0, 0}},{{0, 0, 0},{0, 0, 0},{0, 0, 0}}}};
+		return gson.toJson(table);
 	}
 }
