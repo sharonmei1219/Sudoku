@@ -1,49 +1,61 @@
-var puzzle = [ 
-               [ [ 
-                   [{number:2},{number:1}, {number:0}], 
-                   [{number:0},{number:0}, {number:8}],
-                   [{number:0},{number:0}, {number:0}] 
-                 ],[
-                   [{number:0},{number:0}, {number:0}],
-                   [{number:0},{number:0}, {number:9}], 
-                   [{number:1},{number:5}, {number:2}] 
-                 ],[ 
-                   [{number:0},{number:5}, {number:7}], 
-                   [{number:0},{number:0}, {number:0}], 
-                   [{number:9},{number:0}, {number:0}] 
-               ] ],
-// raw 2
-               [ [ 
-                   [{number:0},{number:9}, {number:6}], 
-                   [{number:4},{number:7}, {number:0}], 
-                   [{number:0},{number:2}, {number:0}]
-                 ],[ 
-                   [{number:4},{number:2}, {number:0}],
-                   [{number:0},{number:0}, {number:0}], 
-                   [{number:0},{number:8}, {number:6}] 
-                 ],[ 
-                   [{number:0},{number:3}, {number:0}], 
-                   [{number:0},{number:2}, {number:6}], 
-                   [{number:4},{number:7}, {number:0}] 
-               ] ],
-// raw 3
-               [ [ 
-                   [{number:0},{number:0}, {number:2}], 
-                   [{number:0},{number:0}, {number:0}], 
-                   [{number:9},{number:3}, {number:0}] 
-                 ],[ 
-                   [{number:8},{number:1}, {number:4}],
-                   [{number:7},{number:0}, {number:0}], 
-                   [{number:0},{number:0}, {number:0}]
-                 ],[ 
-                   [{number:0},{number:0}, {number:0}], 
-                   [{number:5},{number:0}, {number:0}], 
-                   [{number:0},{number:1}, {number:8}] 
-               ] ] 
-]
+//var puzzle = [ 
+//               [ [ 
+//                   [{number:2},{number:1}, {number:0}], 
+//                   [{number:0},{number:0}, {number:8}],
+//                   [{number:0},{number:0}, {number:0}] 
+//                 ],[
+//                   [{number:0},{number:0}, {number:0}],
+//                   [{number:0},{number:0}, {number:9}], 
+//                   [{number:1},{number:5}, {number:2}] 
+//                 ],[ 
+//                   [{number:0},{number:5}, {number:7}], 
+//                   [{number:0},{number:0}, {number:0}], 
+//                   [{number:9},{number:0}, {number:0}] 
+//               ] ],
+//// raw 2
+//               [ [ 
+//                   [{number:0},{number:9}, {number:6}], 
+//                   [{number:4},{number:7}, {number:0}], 
+//                   [{number:0},{number:2}, {number:0}]
+//                 ],[ 
+//                   [{number:4},{number:2}, {number:0}],
+//                   [{number:0},{number:0}, {number:0}], 
+//                   [{number:0},{number:8}, {number:6}] 
+//                 ],[ 
+//                   [{number:0},{number:3}, {number:0}], 
+//                   [{number:0},{number:2}, {number:6}], 
+//                   [{number:4},{number:7}, {number:0}] 
+//               ] ],
+//// raw 3
+//               [ [ 
+//                   [{number:0},{number:0}, {number:2}], 
+//                   [{number:0},{number:0}, {number:0}], 
+//                   [{number:9},{number:3}, {number:0}] 
+//                 ],[ 
+//                   [{number:8},{number:1}, {number:4}],
+//                   [{number:7},{number:0}, {number:0}], 
+//                   [{number:0},{number:0}, {number:0}]
+//                 ],[ 
+//                   [{number:0},{number:0}, {number:0}], 
+//                   [{number:5},{number:0}, {number:0}], 
+//                   [{number:0},{number:1}, {number:8}] 
+//               ] ] 
+//]
+
+var puzzle =[ 
+	        [[[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+              [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+              [[0, 0, 0], [0, 0, 0], [0, 0, 0]]],
+            [[[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+              [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+              [[0, 0, 0], [0, 0, 0], [0, 0, 0]]],
+            [[[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+               [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+               [[1, 2, 3], [4, 5, 6], [7, 8, 9]]],
+	        ]
 
 function numberAtPos(pos){
-	return this.solution[pos.blockRowIndex][pos.blockColumnIndex][pos.cellRowIndex][pos.cellColumnIndex].number;
+	return this.solution[pos.blockRowIndex][pos.blockColumnIndex][pos.cellRowIndex][pos.cellColumnIndex];
 }
 
 function isBlankAtPos(pos){
@@ -56,7 +68,7 @@ function isNumberFitInPos(number, pos){
 }
 
 function updateSolution(number, pos){
-	this.solution[pos.blockRowIndex][pos.blockColumnIndex][pos.cellRowIndex][pos.cellColumnIndex].number = number;
+	this.solution[pos.blockRowIndex][pos.blockColumnIndex][pos.cellRowIndex][pos.cellColumnIndex] = number;
 }
 
 function putNumberInPos(number, pos){
