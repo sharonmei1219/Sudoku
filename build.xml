@@ -36,5 +36,65 @@
 		</copy>
 	</target>
 
+	<target name="createTables">
+		<echo message="CREATE TABLES USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		     url="${db.url}"
+		     userid="${db.user}"
+		     password="${db.pw}"
+		     onerror="continue"
+		     src="db/create_puzzleTable.sql">
+			<classpath refid="master-classpath"/>
+		</sql>
+	</target>
+	
+	<target name="dropTables">
+		<echo message="DROP TABLES USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		     url="${db.url}"
+		     userid="${db.user}"
+		     password="${db.pw}"
+		     onerror="continue">
+			<classpath refid="master-classpath"/>
+			DROP TABLE puzzles;
+		</sql>
+	</target>
+	
+	<target name="loadPuzzles">
+		<echo message="LOAD PUZZLES USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		     url="${db.url}"
+		     userid="${db.user}"
+		     password="${db.pw}"
+		     onerror="continue"
+			 src="db/load_puzzles.sql">
+			<classpath refid="master-classpath"/>
+		</sql>
+	</target>
+	
+	<target name="printPuzzles">
+		<echo message="PRINT TABLES USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		     url="${db.url}"
+		     userid="${db.user}"
+		     password="${db.pw}"
+		     onerror="continue"
+			 print="true">
+			<classpath refid="master-classpath"/>
+			SELECT * FROM puzzles;
+		</sql>
+	</target>
+	
+	<target name="clearPuzzles">
+		<echo message="CLEAR PUZZLES USING: ${db.driver} ${db.url}"/>
+		<sql driver="${db.driver}"
+		     url="${db.url}"
+		     userid="${db.user}"
+		     password="${db.pw}"
+		     onerror="continue">
+			<classpath refid="master-classpath"/>
+			DELETE FROM puzzles;
+		</sql>
+	</target>
 
 </project>
